@@ -1,6 +1,7 @@
 Training Institute CRM MVP.
 
 Stage 1 — Project Setup ✅
+
 Backend Setup
 Created FastAPI project
 Installed:
@@ -147,7 +148,9 @@ Result
 Current MVP Status
 
 Stage 1 ✅ Project Setup
+
 Stage 2 ✅ Lead CRM
+
 Stage 3 ✅ Lead Management
 
 Stage 4 ⏸ AI Lead Scoring
