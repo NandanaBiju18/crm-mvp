@@ -15,6 +15,7 @@ Created database:
 
 CREATE DATABASE sales_ai;
 Project Structure
+
 backend/
 │
 ├── app/
@@ -27,7 +28,9 @@ backend/
 │   ├── routes/
 │   │   └── leads.py
 │   └── schemas/
-│       └── lead.py
+│  
+└── lead.py
+
 Result
 ✅ FastAPI running
 ✅ MySQL connected
