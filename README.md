@@ -102,13 +102,13 @@ PUT /leads/1?status=QUALIFIED
 
 Status options:
 
-NEW
-CONTACTED
-QUALIFIED
-INTERESTED
-CLOSED
-LOST
-Delete Lead
+NEW, 
+CONTACTED, 
+QUALIFIED, 
+INTERESTED, 
+CLOSED, 
+LOST, 
+Delete Lead, 
 
 API:
 
@@ -136,21 +136,30 @@ Delete Button
 Table:
 
 ID | Name | Phone | Interest | Status | Actions
+
 Result
 ✅ Add Lead
 ✅ View Leads
 ✅ Search Lead
 ✅ Update Status
 ✅ Delete Lead
+
 Current MVP Status
+
 Stage 1 ✅ Project Setup
 Stage 2 ✅ Lead CRM
 Stage 3 ✅ Lead Management
 
 Stage 4 ⏸ AI Lead Scoring
+
 Stage 5 ⏳ Follow-up Management
+
 Stage 6 ⏳ Dashboard Analytics
+
 Stage 7 ⏳ Calling Integration
+
 Stage 8 ⏳ AI Summaries
+
 Stage 9 ⏳ WhatsApp Automation
+
 Stage 10 ⏳ AI Voice Agent
