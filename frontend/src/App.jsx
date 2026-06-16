@@ -1,0 +1,162 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+function App() {
+  const [leads, setLeads] = useState([]);
+
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    interest: "",
+  });
+
+  const fetchLeads = async () => {
+    const res = await axios.get("http://localhost:8000/leads");
+    setLeads(res.data);
+  };
+
+  useEffect(() => {
+    fetchLeads();
+  }, []);
+
+  const addLead = async () => {
+    await axios.post("http://localhost:8000/leads", form);
+
+    fetchLeads();
+
+    setForm({
+      name: "",
+      phone: "",
+      interest: "",
+    });
+  };
+
+  const updateStatus = async (id, status) => {
+    await axios.put(
+      `http://localhost:8000/leads/${id}?status=${status}`
+    );
+
+    fetchLeads();
+  };
+
+  const deleteLead = async (id) => {
+    await axios.delete(
+      `http://localhost:8000/leads/${id}`
+    );
+
+    fetchLeads();
+  };
+
+  const searchLead = async (keyword) => {
+    if (!keyword) {
+      fetchLeads();
+      return;
+    }
+
+    const res = await axios.get(
+      `http://localhost:8000/search?keyword=${keyword}`
+    );
+
+    setLeads(res.data);
+  };
+
+  return (
+    <div style={{ padding: 30 }}>
+      <h1>Sales AI CRM</h1>
+
+      <input
+        placeholder="Name"
+        value={form.name}
+        onChange={(e) =>
+          setForm({ ...form, name: e.target.value })
+        }
+      />
+
+      <input
+        placeholder="Phone"
+        value={form.phone}
+        onChange={(e) =>
+          setForm({ ...form, phone: e.target.value })
+        }
+      />
+
+      <input
+        placeholder="Interest"
+        value={form.interest}
+        onChange={(e) =>
+          setForm({ ...form, interest: e.target.value })
+        }
+      />
+
+      <button onClick={addLead}>
+        Add Lead
+      </button>
+
+      <hr />
+
+      <input
+        placeholder="Search Lead"
+        onChange={(e) =>
+          searchLead(e.target.value)
+        }
+      />
+
+      <h2>Leads</h2>
+
+      <table border="1" cellPadding="10">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Interest</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {leads.map((lead) => (
+            <tr key={lead.id}>
+              <td>{lead.id}</td>
+              <td>{lead.name}</td>
+              <td>{lead.phone}</td>
+              <td>{lead.interest}</td>
+
+              <td>
+                <select
+                  value={lead.status}
+                  onChange={(e) =>
+                    updateStatus(
+                      lead.id,
+                      e.target.value
+                    )
+                  }
+                >
+                  <option>NEW</option>
+                  <option>CONTACTED</option>
+                  <option>QUALIFIED</option>
+                  <option>INTERESTED</option>
+                  <option>CLOSED</option>
+                  <option>LOST</option>
+                </select>
+              </td>
+
+              <td>
+                <button
+                  onClick={() =>
+                    deleteLead(lead.id)
+                  }
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export default App;
