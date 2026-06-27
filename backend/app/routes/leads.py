@@ -5,6 +5,7 @@ from app.models.lead import Lead
 from app.database.deps import get_db
 from app.schemas.lead import LeadCreate
 from app.services.lead_scoring import score_lead
+from app.services.ai_service import generate_followup
 
 router = APIRouter()
 @router.post("/leads")
@@ -113,3 +114,25 @@ def update_followup(
     db.refresh(lead)
 
     return lead
+
+@router.post("/ai/followup/{lead_id}")
+def ai_followup(
+    lead_id: int,
+    db: Session = Depends(get_db)
+):
+    lead = db.query(Lead).filter(
+        Lead.id == lead_id
+    ).first()
+
+    if not lead:
+        raise HTTPException(
+            status_code=404,
+            detail="Lead not found"
+        )
+
+    message = generate_followup(lead)
+
+    return {
+        "lead_id": lead.id,
+        "message": message
+    }
