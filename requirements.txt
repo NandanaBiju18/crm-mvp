@@ -1,8 +1,0 @@
-fastapi
-uvicorn
-sqlalchemy
-pymysql
-pydantic
-python-dotenv
-requests
-groq
